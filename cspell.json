@@ -2,5 +2,15 @@
     "version": "0.1",
     "language": "en",
     "ignorePaths": ["node_modules", "build", "dist"],
-    "words": ["todos", "Todos", "doings", "Doings", "dones", "Dones"]
+    "words": [
+        "todos",
+        "Todos",
+        "doings",
+        "Doings",
+        "dones",
+        "Dones",
+        "uuidv",
+        "Column",
+        "Autosize"
+    ]
 }
