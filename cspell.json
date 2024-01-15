@@ -2,5 +2,5 @@
     "version": "0.1",
     "language": "en",
     "ignorePaths": ["node_modules", "build", "dist"],
-    "words": []
+    "words": ["todos", "Todos", "doings", "Doings", "dones", "Dones"]
 }
