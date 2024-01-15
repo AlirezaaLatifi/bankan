@@ -1,3 +1,3 @@
 {
-    "src/*": ["cspell", "prettier --list-different", "eslint"]
+    "src/**/*": ["cspell", "prettier --list-different", "eslint"]
 }
