@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { Droppable } from "react-beautiful-dnd";
 import { useContext, useRef } from "react";
 import useRelatedContext from "../customHooks/useRelatedContextValue.ts";
 import { toCapitalCaseWord } from "../helpers/helpers";
@@ -6,6 +7,7 @@ import type { Col } from "../types/types";
 import Task from "./Task";
 import classNames from "classnames";
 import { setTodosContext } from "../contexts/TasksContext.tsx";
+
 interface Props {
     title: Col;
 }
@@ -13,10 +15,11 @@ interface Props {
 function Column({ title }: Props) {
     const [tasks] = useRelatedContext(title);
     const setTodo = useContext(setTodosContext);
-    const [containerClassNames, titleClassNames, tasksCounterClassNames] =
-        getColumnStyles(title);
     const lastTaskTextareaRef = useRef<HTMLTextAreaElement>(null);
     const focusTimeoutRef = useRef<number>();
+
+    const [containerClassNames, titleClassNames, tasksCounterClassNames] =
+        getColumnStyles(title);
 
     const handleNewTask = () => {
         focusTimeoutRef.current && clearTimeout(focusTimeoutRef.current);
@@ -27,32 +30,53 @@ function Column({ title }: Props) {
     };
 
     return (
-        <div className={containerClassNames}>
-            <header className="flex justify-between items-center mb-10">
-                <h2 className={titleClassNames}>{toCapitalCaseWord(title)}</h2>
-                <p className={tasksCounterClassNames}>{tasks.length} Tasks</p>
-            </header>
-            <div className="grid gap-4 mb-6">
-                {tasks.map((task, index, tasks) => (
-                    <Task
-                        key={task.id}
-                        task={task}
-                        parentColumn={title}
-                        lastTaskTextareaRef={lastTaskTextareaRef}
-                        isLastTask={index === tasks.length - 1}
-                    />
-                ))}
-            </div>
-            {title === "todo" && (
-                <button
-                    type="button"
-                    className="px-4 text-addTask text-todo-400/50 hover:text-todo-400 transition-colors"
-                    onClick={handleNewTask}
+        <Droppable droppableId={title}>
+            {(provided, snapshot) => (
+                <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className={
+                        containerClassNames +
+                        ` ${
+                            snapshot.isDraggingOver
+                                ? "shadow-[0px_0px_0px_2px] transition"
+                                : ""
+                        }`
+                    }
                 >
-                    + New
-                </button>
+                    <header className="flex justify-between items-center mb-10">
+                        <h2 className={titleClassNames}>
+                            {toCapitalCaseWord(title)}
+                        </h2>
+                        <p className={tasksCounterClassNames}>
+                            {tasks.length} Tasks
+                        </p>
+                    </header>
+                    <div className="grid gap-4 mb-6">
+                        {tasks.map((task, index, tasks) => (
+                            <Task
+                                key={task.id}
+                                task={task}
+                                index={index}
+                                parentColumn={title}
+                                lastTaskTextareaRef={lastTaskTextareaRef}
+                                isLastTask={index === tasks.length - 1}
+                            />
+                        ))}
+                        {provided.placeholder}
+                        {title === "todo" && (
+                            <button
+                                type="button"
+                                className="text-start px-4 mt-4 text-addTask text-todo-400/50 hover:text-todo-400 transition-colors"
+                                onClick={handleNewTask}
+                            >
+                                + New
+                            </button>
+                        )}
+                    </div>
+                </div>
             )}
-        </div>
+        </Droppable>
     );
 }
 

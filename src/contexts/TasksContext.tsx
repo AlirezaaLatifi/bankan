@@ -28,24 +28,9 @@ const setDonesContext = createContext<Dispatch<SetStateAction<Task[]>>>(
  ****/
 
 function TasksProvider({ children }: PropsWithChildren) {
-    const [todos, setTodos] = useState<Task[]>([
-        { id: "1", content: "this is test task" },
-        { id: "2", content: "another test task" },
-    ]);
-    const [doings, setDoings] = useState<Task[]>([
-        {
-            id: "3",
-            content:
-                "this is a long test message to see auto size functionality.",
-        },
-        { id: "4", content: "another test task" },
-    ]);
-    const [dones, setDones] = useState<Task[]>([
-        { id: "5", content: "this is test task" },
-        { id: "6", content: "another test task" },
-    ]);
-
-    console.log(todos);
+    const [todos, setTodos] = useState<Task[]>([]);
+    const [doings, setDoings] = useState<Task[]>([]);
+    const [dones, setDones] = useState<Task[]>([]);
 
     return (
         <todosContext.Provider value={todos}>

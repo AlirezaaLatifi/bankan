@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { Draggable } from "react-beautiful-dnd";
 import type { Col, Task } from "../types/types";
 import {
     ChangeEvent,
@@ -15,11 +16,18 @@ import { setDonesContext, setTodosContext } from "../contexts/TasksContext";
 interface Props {
     task: Task;
     parentColumn: Col;
+    index: number;
     isLastTask: boolean;
     lastTaskTextareaRef: RefObject<HTMLTextAreaElement>;
 }
 
-function Task({ task, parentColumn, isLastTask, lastTaskTextareaRef }: Props) {
+function Task({
+    task,
+    parentColumn,
+    index,
+    isLastTask,
+    lastTaskTextareaRef,
+}: Props) {
     const [isChecked, setIsChecked] = useState(() =>
         parentColumn === "done" ? true : false,
     );
@@ -86,35 +94,52 @@ function Task({ task, parentColumn, isLastTask, lastTaskTextareaRef }: Props) {
     };
 
     return (
-        <div className={containerClassNames}>
-            <div className="relative mr-3">
-                <input
-                    id={`${task.id}`}
-                    type="checkbox"
-                    className="opacity-0"
-                />
-                <label
-                    htmlFor={`${task.id}`}
-                    className={labelClassNames}
-                    onClick={handleCheckmark}
-                ></label>
-            </div>
-            <textarea
-                className={textareaClassNames}
-                onChange={handleChange}
-                ref={isLastTask ? lastTaskTextareaRef : textAreaRef}
-                rows={1}
-                value={inputText}
-                onBlur={handleSaveOnBlur}
-            />
-            <button
-                type="button"
-                className="opacity-0 p-2 text-red-300 text-xl group-hover:opacity-100 hover:text-red-600 transition-all"
-                onClick={handleTaskDelete}
-            >
-                X
-            </button>
-        </div>
+        <Draggable key={task.id} draggableId={task.id} index={index}>
+            {(provided, snapshot) => (
+                <div
+                    data-count={index}
+                    className={
+                        containerClassNames +
+                        ` ${
+                            snapshot.isDragging
+                                ? "border-dashed border-black"
+                                : ""
+                        }`
+                    }
+                    ref={provided.innerRef}
+                    {...provided.dragHandleProps}
+                    {...provided.draggableProps}
+                >
+                    <div className="relative mr-3">
+                        <input
+                            id={`${task.id}`}
+                            type="checkbox"
+                            className="opacity-0"
+                        />
+                        <label
+                            htmlFor={`${task.id}`}
+                            className={labelClassNames}
+                            onClick={handleCheckmark}
+                        ></label>
+                    </div>
+                    <textarea
+                        className={textareaClassNames}
+                        onChange={handleChange}
+                        ref={isLastTask ? lastTaskTextareaRef : textAreaRef}
+                        rows={1}
+                        value={inputText}
+                        onBlur={handleSaveOnBlur}
+                    />
+                    <button
+                        type="button"
+                        className="opacity-0 p-2 text-red-300 text-xl group-hover:opacity-100 hover:text-red-600 transition-all"
+                        onClick={handleTaskDelete}
+                    >
+                        X
+                    </button>
+                </div>
+            )}
+        </Draggable>
     );
 }
 
