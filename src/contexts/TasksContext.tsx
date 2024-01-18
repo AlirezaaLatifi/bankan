@@ -4,9 +4,9 @@ import {
     PropsWithChildren,
     SetStateAction,
     createContext,
-    useState,
 } from "react";
 import type { Col, Task } from "../types/types";
+import useLocalStorageSyncState from "../customHooks/useLocalStorageSyncState";
 
 const todosContext = createContext<Task[]>([]);
 const setTodosContext = createContext<Dispatch<SetStateAction<Task[]>>>(
@@ -28,9 +28,9 @@ const setDonesContext = createContext<Dispatch<SetStateAction<Task[]>>>(
  ****/
 
 function TasksProvider({ children }: PropsWithChildren) {
-    const [todos, setTodos] = useState<Task[]>([]);
-    const [doings, setDoings] = useState<Task[]>([]);
-    const [dones, setDones] = useState<Task[]>([]);
+    const [todos, setTodos] = useLocalStorageSyncState("todo");
+    const [doings, setDoings] = useLocalStorageSyncState("doing");
+    const [dones, setDones] = useLocalStorageSyncState("done");
 
     return (
         <todosContext.Provider value={todos}>
