@@ -1,30 +1,25 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Bankan
+A simple Kanban Board, **To present my solid understanding of React Fundamentals,
+React Performance, and familiarity with Typescript and Testing User Interfaces.**
 
-Currently, two official plugins are available:
+Through this project I'm trying to focus on:
+- Structure components and managed states in a way that prevents
+unnecessary re-renderings.
+- Use Linter and Static-Type Language and wrote Unit, Integration, and
+e2e tests to reduce development phase mistakes and ensure the
+application functions as expected.
+- Use editorconfig, pre-commit hook and gitattributes to demonstrate
+my awareness of the cross-platform teamwork challenges like EOL.
+- Implement drag and drop and micro-animations to provide an
+appealing user experience.
 
--   [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
--   [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ 
+## Screenshots
 
-## Expanding the ESLint configuration
+![Bankan](https://github.com/AlirezaaLatifi/bankan/assets/92823582/37288f85-1c44-4e3d-aef0-c1f991cb9e02)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
--   Configure the top-level `parserOptions` property like this:
+## Demo
 
-```js
-export default {
-    // other rules...
-    parserOptions: {
-        ecmaVersion: "latest",
-        sourceType: "module",
-        project: ["./tsconfig.json", "./tsconfig.node.json"],
-        tsconfigRootDir: __dirname,
-    },
-};
-```
-
--   Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
--   Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
--   Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+https://alirezaalatifi.github.io/bankan
