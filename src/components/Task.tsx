@@ -13,7 +13,7 @@ import useAutosizeTextArea from "../customHooks/useAutosizeTextarea";
 import useRelatedContextSetter from "../customHooks/useRelatedContextSetter";
 import { setDonesContext, setTodosContext } from "../contexts/TasksContext";
 
-interface Props {
+export interface Props {
     task: Task;
     parentColumn: Col;
     index: number;
@@ -97,6 +97,7 @@ function Task({
         <Draggable key={task.id} draggableId={task.id} index={index}>
             {(provided, snapshot) => (
                 <div
+                    data-testId={"task-container"}
                     data-count={index}
                     className={
                         containerClassNames +
@@ -117,6 +118,7 @@ function Task({
                             className="opacity-0"
                         />
                         <label
+                            data-testid="checkbox-label"
                             htmlFor={`${task.id}`}
                             className={labelClassNames}
                             onClick={handleCheckmark}

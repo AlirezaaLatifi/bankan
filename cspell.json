@@ -11,6 +11,7 @@
         "Dones",
         "uuidv",
         "Column",
-        "Autosize"
+        "Autosize",
+        "testid"
     ]
 }
